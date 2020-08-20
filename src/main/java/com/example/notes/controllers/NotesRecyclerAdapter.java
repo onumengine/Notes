@@ -17,7 +17,6 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
     @Override
     public void onBindViewHolder(@NonNull NotesRecyclerViewHolder holder, int position)
     {
-
     }
 
     @Override

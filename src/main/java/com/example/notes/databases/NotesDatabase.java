@@ -24,6 +24,7 @@ public class NotesDatabase extends SQLiteOpenHelper
     public void onCreate(@NonNull SQLiteDatabase sqLiteDatabase)
     {
         String tableCreationStatement = "CREATE TABLE NOTES (_id INTEGER PRIMARY KEY AUTOINCREMENT, \n" + "title TEXT, \n" + "body TEXT)";
+
         sqLiteDatabase.execSQL(tableCreationStatement);
         sqLiteDatabase.close();
     }
@@ -38,7 +39,7 @@ public class NotesDatabase extends SQLiteOpenHelper
         onCreate(sqLiteDatabase);
     }
 
-    public void saveNote(Note note)
+    public void insertNote(Note note)
     {
         SQLiteDatabase db = getWritableDatabase();
 

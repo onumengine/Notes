@@ -1,8 +1,10 @@
 package com.example.notes.views;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.widget.EditText;
 
 import com.example.notes.R;
@@ -30,18 +32,34 @@ public class NoteActivity extends AppCompatActivity
     protected void onPause()
     {
         super.onPause();
-
         createAndSaveNote();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState)
+    {
+        outState.putString("NOTE_TITLE_KEY", noteTitleEditText.getText().toString());
+        outState.putString("NOTE_TEXT_KEY", noteTextEditText.getText().toString());
+
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        noteTitleEditText.setText(savedInstanceState.getString("NOTE_TITLE_KEY"));
+        noteTextEditText.setText(savedInstanceState.getString("NOTE_TEXT_KEY"));
     }
 
     private void createAndSaveNote()
     {
 
-        if (fieldsContainText(noteTitleEditText, noteTextEditText)) {
-
+        if (fieldsContainText(noteTitleEditText, noteTextEditText))
+        {
             Note newNote = new Note(noteTitleEditText.getText().toString(), noteTextEditText.getText().toString());
             saveNoteToDatabase(newNote);
-
         }
     }
 
@@ -52,7 +70,7 @@ public class NoteActivity extends AppCompatActivity
 
     private void saveNoteToDatabase(Note note)
     {
-        notesDatabase.saveNote(note);
+        notesDatabase.insertNote(note);
     }
 
 }
