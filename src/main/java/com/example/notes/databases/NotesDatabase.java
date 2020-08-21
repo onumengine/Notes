@@ -3,7 +3,9 @@ package com.example.notes.databases;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +28,6 @@ public class NotesDatabase extends SQLiteOpenHelper
         String tableCreationStatement = "CREATE TABLE NOTES (_id INTEGER PRIMARY KEY AUTOINCREMENT, \n" + "title TEXT, \n" + "body TEXT)";
 
         sqLiteDatabase.execSQL(tableCreationStatement);
-        sqLiteDatabase.close();
     }
 
     @Override
@@ -48,7 +49,15 @@ public class NotesDatabase extends SQLiteOpenHelper
         contentValues.put("title", note.getTitle());
         contentValues.put("body", note.getText());
 
-        db.insert("NOTES", null, contentValues);
+        try
+        {
+            db.insert("NOTES", null, contentValues);
+        }
+        catch (SQLiteException e)
+        {
+            Log.e("NOTESDATABASE", e.getMessage());
+        }
+
         db.close();
     }
 }

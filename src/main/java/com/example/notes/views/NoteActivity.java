@@ -5,15 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.example.notes.R;
 import com.example.notes.databases.NotesDatabase;
 import com.example.notes.models.Note;
 
+import java.util.ArrayList;
+
 public class NoteActivity extends AppCompatActivity
 {
     private EditText noteTitleEditText, noteTextEditText;
+    private ArrayList<Note> arrayListOfNotes;
     private NotesDatabase notesDatabase;
 
     @Override
@@ -26,13 +30,16 @@ public class NoteActivity extends AppCompatActivity
         noteTextEditText = findViewById(R.id.note_text_text_input);
 
         notesDatabase = new NotesDatabase(this);
+
+        arrayListOfNotes = new ArrayList<Note>();
     }
 
     @Override
     protected void onPause()
     {
+        Log.d("NoteActivity", "NoteActivity paused");
+        saveTextFieldsContentsAsNote();
         super.onPause();
-        createAndSaveNote();
     }
 
     @Override
@@ -53,19 +60,22 @@ public class NoteActivity extends AppCompatActivity
         noteTextEditText.setText(savedInstanceState.getString("NOTE_TEXT_KEY"));
     }
 
-    private void createAndSaveNote()
+    private void saveTextFieldsContentsAsNote()
     {
 
-        if (fieldsContainText(noteTitleEditText, noteTextEditText))
+        if (editTextContainsText(noteTitleEditText) && editTextContainsText(noteTextEditText))
         {
             Note newNote = new Note(noteTitleEditText.getText().toString(), noteTextEditText.getText().toString());
+
+            arrayListOfNotes.add(newNote);
+
             saveNoteToDatabase(newNote);
         }
     }
 
-    private boolean fieldsContainText(EditText editText, EditText editText2)
+    private boolean editTextContainsText(EditText editText)
     {
-        return (editText.getText().toString() != null) && (editText2.getText().toString() != null);
+        return (editText.getText().toString() != null);
     }
 
     private void saveNoteToDatabase(Note note)
