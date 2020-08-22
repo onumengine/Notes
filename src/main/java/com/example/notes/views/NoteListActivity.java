@@ -5,8 +5,9 @@ import android.os.Bundle;
 
 import com.example.notes.R;
 import com.example.notes.controllers.NotesRecyclerAdapter;
+import com.example.notes.databases.NotesDatabase;
+import com.example.notes.models.Note;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class NoteListActivity extends AppCompatActivity
 {
     private RecyclerView notesRecyclerView;
-    public ArrayList<String> listOfNames = new ArrayList<String>();
+    public ArrayList<Note> listOfNotes = new ArrayList<Note>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,18 +44,13 @@ public class NoteListActivity extends AppCompatActivity
         populateListOfNames();
 
         notesRecyclerView = findViewById(R.id.notes_recyclerView);
-        notesRecyclerView.setAdapter(new NotesRecyclerAdapter(listOfNames));
+        notesRecyclerView.setAdapter(new NotesRecyclerAdapter(listOfNotes));
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void populateListOfNames()
     {
-        this.listOfNames.add("Vivian Odumeje" );
-        this.listOfNames.add("Lenore Brownson");
-        this.listOfNames.add("Otto Blake");
-        this.listOfNames.add("Reeve Williams");
-        this.listOfNames.add("Elsie Harem");
-        this.listOfNames.add("Paul Star");
+        listOfNotes = new NotesDatabase(this).getArrayListOfNotesFromDatabase();
     }
 
     private void goToNoteActivity()

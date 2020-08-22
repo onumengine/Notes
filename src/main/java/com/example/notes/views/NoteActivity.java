@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class NoteActivity extends AppCompatActivity
 {
     private EditText noteTitleEditText, noteTextEditText;
-    private ArrayList<Note> arrayListOfNotes;
     private NotesDatabase notesDatabase;
 
     @Override
@@ -30,15 +29,13 @@ public class NoteActivity extends AppCompatActivity
         noteTextEditText = findViewById(R.id.note_text_text_input);
 
         notesDatabase = new NotesDatabase(this);
-
-        arrayListOfNotes = new ArrayList<Note>();
     }
 
     @Override
     protected void onPause()
     {
         Log.d("NoteActivity", "NoteActivity paused");
-        saveTextFieldsContentsAsNote();
+        saveContentsOfTextFieldsAsNote();
         super.onPause();
     }
 
@@ -60,14 +57,12 @@ public class NoteActivity extends AppCompatActivity
         noteTextEditText.setText(savedInstanceState.getString("NOTE_TEXT_KEY"));
     }
 
-    private void saveTextFieldsContentsAsNote()
+    private void saveContentsOfTextFieldsAsNote()
     {
 
         if (editTextContainsText(noteTitleEditText) && editTextContainsText(noteTextEditText))
         {
             Note newNote = new Note(noteTitleEditText.getText().toString(), noteTextEditText.getText().toString());
-
-            arrayListOfNotes.add(newNote);
 
             saveNoteToDatabase(newNote);
         }
@@ -75,7 +70,7 @@ public class NoteActivity extends AppCompatActivity
 
     private boolean editTextContainsText(EditText editText)
     {
-        return (editText.getText().toString() != null);
+        return (editText.getText().toString().length() > 0);
     }
 
     private void saveNoteToDatabase(Note note)

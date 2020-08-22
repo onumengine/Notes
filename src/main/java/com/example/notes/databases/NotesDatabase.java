@@ -64,25 +64,23 @@ public class NotesDatabase extends SQLiteOpenHelper
         db.close();
     }
 
-    public ArrayList<Note> createArrayListOfNotesFromDatabase()
+    public ArrayList<Note> getArrayListOfNotesFromDatabase()
     {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<Note> arrayListOfNotes = new ArrayList<Note>();
-        Cursor cursor = db.query(
-                "NOTES",
-                new String[] {"title", "body"},
-                null, null, null, null, null);
+        String selectionQuery = "SELECT*FROM NOTES";
+        Cursor cursor = db.rawQuery(selectionQuery, null);
 
         if (cursor.moveToFirst()) {
             do
             {
                 Note note = new Note();
-                note.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                note.setText(cursor.getString(cursor.getColumnIndex("text")));
+                note.setTitle(cursor.getString(1));
+                note.setText(cursor.getString(2));
                 arrayListOfNotes.add(note);
             } while (cursor.moveToNext());
         }
-
+        cursor.close();
         return arrayListOfNotes;
     }
 

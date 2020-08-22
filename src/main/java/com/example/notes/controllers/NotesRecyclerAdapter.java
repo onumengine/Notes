@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerViewHolder>
 {
-    private static ArrayList<String> arrayListOfNotes = new ArrayList<>();
+    private static ArrayList<Note> arrayListOfNotes = new ArrayList<>();
 
-    public NotesRecyclerAdapter(ArrayList<String> arrayListOfNotes)
+    public NotesRecyclerAdapter(ArrayList<Note> arrayListOfNotes)
     {
         this.arrayListOfNotes = arrayListOfNotes;
     }
@@ -33,8 +33,8 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
     @Override
     public void onBindViewHolder(@NonNull NotesRecyclerViewHolder holder, int position)
     {
-        holder.textViewDisplayingNoteTitle.setText(arrayListOfNotes.get(position));
-        holder.textViewDisplayingNoteText.setText(arrayListOfNotes.get(position));
+        holder.textViewDisplayingNoteTitle.setText(arrayListOfNotes.get(position).getTitle());
+        holder.textViewDisplayingNoteText.setText(arrayListOfNotes.get(position).getText());
     }
 
     @Override
