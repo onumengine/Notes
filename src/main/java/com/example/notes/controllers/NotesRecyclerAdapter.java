@@ -1,27 +1,45 @@
 package com.example.notes.controllers;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notes.R;
+import com.example.notes.models.Note;
+
+import java.util.ArrayList;
+
 public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerViewHolder>
 {
+    private static ArrayList<String> arrayListOfNotes = new ArrayList<>();
+
+    public NotesRecyclerAdapter(ArrayList<String> arrayListOfNotes)
+    {
+        this.arrayListOfNotes = arrayListOfNotes;
+    }
+
     @NonNull
     @Override
     public NotesRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_viewholder, parent, false);
+        return new NotesRecyclerViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NotesRecyclerViewHolder holder, int position)
     {
+        holder.textViewDisplayingNoteTitle.setText(arrayListOfNotes.get(position));
+        holder.textViewDisplayingNoteText.setText(arrayListOfNotes.get(position));
     }
 
     @Override
     public int getItemCount()
     {
-        return 0;
+        return arrayListOfNotes.size();
     }
 }

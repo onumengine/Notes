@@ -2,6 +2,7 @@ package com.example.notes.databases;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.notes.models.Note;
+
+import java.util.ArrayList;
 
 public class NotesDatabase extends SQLiteOpenHelper
 {
@@ -60,4 +63,27 @@ public class NotesDatabase extends SQLiteOpenHelper
 
         db.close();
     }
+
+    public ArrayList<Note> createArrayListOfNotesFromDatabase()
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<Note> arrayListOfNotes = new ArrayList<Note>();
+        Cursor cursor = db.query(
+                "NOTES",
+                new String[] {"title", "body"},
+                null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do
+            {
+                Note note = new Note();
+                note.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                note.setText(cursor.getString(cursor.getColumnIndex("text")));
+                arrayListOfNotes.add(note);
+            } while (cursor.moveToNext());
+        }
+
+        return arrayListOfNotes;
+    }
+
 }
