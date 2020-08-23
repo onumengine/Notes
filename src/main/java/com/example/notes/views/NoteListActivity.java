@@ -8,6 +8,7 @@ import com.example.notes.controllers.NotesRecyclerAdapter;
 import com.example.notes.databases.NotesDatabase;
 import com.example.notes.models.Note;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
