@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.NoteActivity"
+            android:label="@string/title_activity_note"
             android:parentActivityName=".views.NoteListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

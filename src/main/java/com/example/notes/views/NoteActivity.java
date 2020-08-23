@@ -32,11 +32,11 @@ public class NoteActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onPause()
+    protected void onStop()
     {
         Log.d("NoteActivity", "NoteActivity paused");
         saveContentsOfTextFieldsAsNote();
-        super.onPause();
+        super.onStop();
     }
 
     @Override
