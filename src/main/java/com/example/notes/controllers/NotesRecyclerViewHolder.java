@@ -35,7 +35,7 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
             public void onClick(View view)
             {
                 Log.d("NotesViewHolder", "A note has been clicked");
-                Toast.makeText(view.getContext(), "Note number " + getAdapterPosition() + " has been clicked", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Note number " + getAdapterPosition() + " has been clicked", Snackbar.LENGTH_SHORT).setAction("UNDO", null).show();
             }
         });
 
@@ -44,6 +44,13 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
             @Override
             public boolean onLongClick(View view)
             {
+                int visibilityIndex = 0;
+
+                if (visibilityIndex == 0)
+                    deleteButton.setVisibility(View.GONE);
+                if (visibilityIndex == 1)
+                    deleteButton.setVisibility(View.VISIBLE);
+
                 deleteButton.setVisibility(View.VISIBLE);
                 return false;
             }
