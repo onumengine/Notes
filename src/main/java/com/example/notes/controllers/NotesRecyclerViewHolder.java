@@ -44,12 +44,14 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
             @Override
             public boolean onLongClick(View view)
             {
+                /*
                 int visibilityIndex = 0;
 
                 if (visibilityIndex == 0)
                     deleteButton.setVisibility(View.GONE);
                 if (visibilityIndex == 1)
                     deleteButton.setVisibility(View.VISIBLE);
+                 */
 
                 deleteButton.setVisibility(View.VISIBLE);
                 return false;
