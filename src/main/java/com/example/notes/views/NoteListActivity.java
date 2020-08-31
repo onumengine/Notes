@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,8 +23,6 @@ import java.util.ArrayList;
 
 public class NoteListActivity extends AppCompatActivity
 {
-    private RecyclerView notesRecyclerView;
-    public ArrayList<Note> listOfNotes = new ArrayList<Note>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,20 +38,10 @@ public class NoteListActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                goToNoteActivity();
+                startNoteFragment();
             }
         });
 
-        populateListOfNames();
-
-        notesRecyclerView = findViewById(R.id.notes_recyclerView);
-        notesRecyclerView.setAdapter(new NotesRecyclerAdapter(listOfNotes));
-        notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void populateListOfNames()
-    {
-        listOfNotes = new NotesDatabase(this).getArrayListOfNotesFromDatabase();
     }
 
     private void goToNoteActivity()
@@ -64,6 +53,8 @@ public class NoteListActivity extends AppCompatActivity
     private void startNoteFragment()
     {
         FragmentTransaction noteFragTransaction = getSupportFragmentManager().beginTransaction();
-
+        noteFragTransaction.replace(R.id.note_list_fragment, new NoteFragment());
+        noteFragTransaction.addToBackStack(null);
+        noteFragTransaction.commit();
     }
 }

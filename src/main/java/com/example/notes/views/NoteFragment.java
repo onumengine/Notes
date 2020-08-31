@@ -23,6 +23,17 @@ public class NoteFragment extends Fragment
     private final String LOG_TAG = "Note Fragment";
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null)
+        {
+            noteTitleEditText.setText(savedInstanceState.getString("NOTE_TITLE_KEY"));
+            noteTextEditText.setText(savedInstanceState.getString("NOTE_TEXT_KEY"));
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
@@ -50,15 +61,6 @@ public class NoteFragment extends Fragment
         outState.putString("NOTE_TEXT_KEY", noteTextEditText.getText().toString());
 
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState)
-    {
-        super.onViewStateRestored(savedInstanceState);
-
-        noteTitleEditText.setText(savedInstanceState.getString("NOTE_TITLE_KEY"));
-        noteTextEditText.setText(savedInstanceState.getString("NOTE_TEXT_KEY"));
     }
 
     private void saveContentsOfTextFieldsAsNote()
