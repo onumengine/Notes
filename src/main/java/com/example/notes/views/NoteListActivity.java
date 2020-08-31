@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,5 +59,11 @@ public class NoteListActivity extends AppCompatActivity
     {
         Intent noteActivityIntent = new Intent(this, NoteActivity.class);
         startActivity(noteActivityIntent);
+    }
+
+    private void startNoteFragment()
+    {
+        FragmentTransaction noteFragTransaction = getSupportFragmentManager().beginTransaction();
+
     }
 }

@@ -28,69 +28,6 @@ public class NoteActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-
-        noteTitleEditText = findViewById(R.id.note_title_text_input);
-        noteTextEditText = findViewById(R.id.note_text_text_input);
-
-        notesDatabase = new NotesDatabase(this);
     }
 
-    @Override
-    protected void onStop()
-    {
-        Log.d("NoteActivity", "NoteActivity paused");
-        saveContentsOfTextFieldsAsNote();
-        super.onStop();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState)
-    {
-        outState.putString("NOTE_TITLE_KEY", noteTitleEditText.getText().toString());
-        outState.putString("NOTE_TEXT_KEY", noteTextEditText.getText().toString());
-
-        super.onSaveInstanceState(outState, outPersistentState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
-    {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        noteTitleEditText.setText(savedInstanceState.getString("NOTE_TITLE_KEY"));
-        noteTextEditText.setText(savedInstanceState.getString("NOTE_TEXT_KEY"));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.note_activity_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    private void saveContentsOfTextFieldsAsNote()
-    {
-
-        if (editTextContainsText(noteTitleEditText) && editTextContainsText(noteTextEditText))
-        {
-            Note newNote = new Note(noteTitleEditText.getText().toString(), noteTextEditText.getText().toString());
-
-            saveNoteToDatabase(newNote);
-        }
-    }
-
-    private boolean editTextContainsText(EditText editText)
-    {
-        return (editText.getText().toString().length() > 0);
-    }
-
-    private void saveNoteToDatabase(Note note)
-    {
-        notesDatabase.insertNote(note);
-    }
-
-    public void discardNote(MenuItem item)
-    {
-        //TODO
-    }
 }

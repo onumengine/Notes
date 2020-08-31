@@ -1,7 +1,5 @@
 package com.example.notes.controllers;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notes.R;
-import com.example.notes.views.NoteActivity;
-import com.example.notes.views.NoteListActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
@@ -21,6 +17,7 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
     public TextView textViewDisplayingNoteTitle;
     public TextView textViewDisplayingNoteText;
     public ImageButton deleteButton;
+    public int visibilityIndex;
 
     public NotesRecyclerViewHolder(@NonNull View itemView)
     {
@@ -28,6 +25,7 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
         this.textViewDisplayingNoteTitle = itemView.findViewById(R.id.viewholder_note_title_textView);
         this.textViewDisplayingNoteText = itemView.findViewById(R.id.viewholder_note_text_textView);
         this.deleteButton = itemView.findViewById(R.id.viewholder_delete_button);
+        this.visibilityIndex = 0;
 
         itemView.setOnClickListener(new View.OnClickListener()
         {
@@ -44,17 +42,9 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
             @Override
             public boolean onLongClick(View view)
             {
-                /*
-                int visibilityIndex = 0;
-
-                if (visibilityIndex == 0)
-                    deleteButton.setVisibility(View.GONE);
-                if (visibilityIndex == 1)
-                    deleteButton.setVisibility(View.VISIBLE);
-                 */
-
-                deleteButton.setVisibility(View.VISIBLE);
-                return false;
+                toggleVisibilityIndex();
+                changeVisibilityAccordingToVisibilityIndex();
+                return true;
             }
         });
 
@@ -66,6 +56,22 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
                 Toast.makeText(view.getContext(), "Why u wanna delete me tho", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void toggleVisibilityIndex()
+    {
+        if (visibilityIndex == 0)
+            visibilityIndex = 1;
+        if (visibilityIndex == 1)
+            visibilityIndex = 0;
+    }
+
+    public void changeVisibilityAccordingToVisibilityIndex()
+    {
+        if (visibilityIndex == 0)
+            deleteButton.setVisibility(View.INVISIBLE);
+        if (visibilityIndex == 1)
+            deleteButton.setVisibility(View.VISIBLE);
     }
 
 }
