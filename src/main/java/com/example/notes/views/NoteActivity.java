@@ -20,8 +20,6 @@ import java.util.ArrayList;
 
 public class NoteActivity extends AppCompatActivity
 {
-    private EditText noteTitleEditText, noteTextEditText;
-    private NotesDatabase notesDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

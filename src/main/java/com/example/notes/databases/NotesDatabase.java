@@ -84,4 +84,14 @@ public class NotesDatabase extends SQLiteOpenHelper
         return arrayListOfNotes;
     }
 
+    public void deleteNote(String title)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(
+                "NOTES",
+                "title = ?",
+                new String[] {title}
+        );
+    }
+
 }

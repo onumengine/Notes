@@ -42,8 +42,7 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
             @Override
             public boolean onLongClick(View view)
             {
-                toggleVisibilityIndex();
-                changeVisibilityAccordingToVisibilityIndex();
+                changeVisibility(deleteButton);
                 return true;
             }
         });
@@ -58,20 +57,13 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
         });
     }
 
-    private void toggleVisibilityIndex()
+    public void changeVisibility(View view)
     {
-        if (visibilityIndex == 0)
-            visibilityIndex = 1;
-        if (visibilityIndex == 1)
-            visibilityIndex = 0;
+        if (view.getVisibility() != View.VISIBLE)
+        {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
     }
-
-    public void changeVisibilityAccordingToVisibilityIndex()
-    {
-        if (visibilityIndex == 0)
-            deleteButton.setVisibility(View.INVISIBLE);
-        if (visibilityIndex == 1)
-            deleteButton.setVisibility(View.VISIBLE);
-    }
-
 }
