@@ -81,6 +81,7 @@ public class NotesDatabase extends SQLiteOpenHelper
             } while (cursor.moveToNext());
         }
         cursor.close();
+        db.close();
         return arrayListOfNotes;
     }
 
@@ -92,6 +93,7 @@ public class NotesDatabase extends SQLiteOpenHelper
                 "title = ?",
                 new String[] {title}
         );
+        db.close();
     }
 
 }

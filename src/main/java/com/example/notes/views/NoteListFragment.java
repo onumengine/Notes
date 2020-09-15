@@ -18,9 +18,11 @@ import com.example.notes.models.Note;
 import java.util.ArrayList;
 
 
-public class NoteListFragment extends Fragment
+public class NoteListFragment extends Fragment implements NotesRecyclerAdapter.Listener
 {
     private RecyclerView notesRecyclerView;
+    private NotesRecyclerAdapter recyclerAdapter;
+    private NotesDatabase notesDB;
     public ArrayList<Note> listOfNotes = new ArrayList<Note>();
 
     @Override
@@ -29,17 +31,28 @@ public class NoteListFragment extends Fragment
     {
         View inflatedView = inflater.inflate(R.layout.fragment_note_list, container, false);
 
-        populateListOfNames();
+        notesDB = new NotesDatabase(this.getContext());
+
+        populateListOfNotes();
 
         notesRecyclerView = inflatedView.findViewById(R.id.notes_recyclerView);
-        notesRecyclerView.setAdapter(new NotesRecyclerAdapter(listOfNotes));
+        recyclerAdapter = new NotesRecyclerAdapter(listOfNotes);
+        notesRecyclerView.setAdapter(recyclerAdapter);
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(inflatedView.getContext()));
 
         return inflatedView;
     }
 
-    private void populateListOfNames()
+    private void populateListOfNotes()
     {
-        listOfNotes = new NotesDatabase(this.getContext()).getArrayListOfNotesFromDatabase();
+        listOfNotes = notesDB.getArrayListOfNotesFromDatabase();
+    }
+
+    @Override
+    public void onDeleteButtonClick(String noteTitle)
+    {
+        notesDB.deleteNote(noteTitle);
+        populateListOfNotes();
+        recyclerAdapter.setArrayListOfNotes(listOfNotes);
     }
 }

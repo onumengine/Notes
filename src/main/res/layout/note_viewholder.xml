@@ -40,10 +40,11 @@
                     android:id="@+id/viewholder_note_text_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
                     android:layout_marginStart="8dp"
-                    android:textSize="18sp"
-                    android:textAlignment="viewStart"/>
+                    android:layout_marginBottom="4dp"
+                    android:maxLines="1"
+                    android:textAlignment="viewStart"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

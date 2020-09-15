@@ -1,6 +1,5 @@
 package com.example.notes.controllers;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,12 @@ import java.util.ArrayList;
 public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerViewHolder>
 {
     private static ArrayList<Note> arrayListOfNotes = new ArrayList<>();
+    private Listener listener;
+
+    public void setArrayListOfNotes(ArrayList<Note> arrayListOfNotes)
+    {
+        this.arrayListOfNotes = arrayListOfNotes;
+    }
 
     public NotesRecyclerAdapter(ArrayList<Note> arrayListOfNotes)
     {
@@ -31,15 +36,36 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NotesRecyclerViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull NotesRecyclerViewHolder holder, final int position)
     {
         holder.textViewDisplayingNoteTitle.setText(arrayListOfNotes.get(position).getTitle());
         holder.textViewDisplayingNoteText.setText(arrayListOfNotes.get(position).getText());
+        holder.deleteButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (listener != null)
+                {
+                    listener.onDeleteButtonClick(arrayListOfNotes.get(position).getTitle());
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount()
     {
         return arrayListOfNotes.size();
+    }
+
+    public interface Listener
+    {
+        void onDeleteButtonClick(String noteTitle);
+    }
+
+    public void setListener(Listener listener)
+    {
+        this.listener = listener;
     }
 }
