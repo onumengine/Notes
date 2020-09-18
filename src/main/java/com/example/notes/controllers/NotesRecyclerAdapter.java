@@ -17,6 +17,17 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
     private static ArrayList<Note> arrayListOfNotes = new ArrayList<>();
     private Listener listener;
 
+    public interface Listener
+    {
+        void onDeleteButtonClick(String noteTitle);
+        void onViewHolderClick(int notePosition);
+    }
+
+    public void setListener(Listener listener)
+    {
+        this.listener = listener;
+    }
+
     public void setArrayListOfNotes(ArrayList<Note> arrayListOfNotes)
     {
         this.arrayListOfNotes = arrayListOfNotes;
@@ -51,21 +62,21 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
                 }
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (listener != null){
+                    listener.onViewHolderClick(position);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount()
     {
         return arrayListOfNotes.size();
-    }
-
-    public interface Listener
-    {
-        void onDeleteButtonClick(String noteTitle);
-    }
-
-    public void setListener(Listener listener)
-    {
-        this.listener = listener;
     }
 }

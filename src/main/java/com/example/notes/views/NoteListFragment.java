@@ -1,8 +1,10 @@
 package com.example.notes.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,5 +56,15 @@ public class NoteListFragment extends Fragment implements NotesRecyclerAdapter.L
         notesDB.deleteNote(noteTitle);
         populateListOfNotes();
         recyclerAdapter.setArrayListOfNotes(listOfNotes);
+    }
+
+    @Override
+    public void onViewHolderClick(int notePosition)
+    {
+        FragmentTransaction openNote = getParentFragmentManager().beginTransaction();
+        openNote.add(R.id.note_list_fragment, new NoteFragment());
+        openNote.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        openNote.addToBackStack(null);
+        openNote.commit();
     }
 }
