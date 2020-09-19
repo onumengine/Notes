@@ -23,6 +23,10 @@ import java.util.ArrayList;
 
 public class NoteListActivity extends AppCompatActivity
 {
+    private RecyclerView recyclerView;
+    private NotesRecyclerAdapter recyclerAdapter;
+    private LinearLayoutManager layoutManager;
+    private ArrayList<Note> arrayListOfNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,29 +36,30 @@ public class NoteListActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        arrayListOfNotes = new NotesDatabase(this).getArrayListOfNotesFromDatabase();
+
+        recyclerView = findViewById(R.id.note_list_recyclerview);
+        recyclerAdapter = new NotesRecyclerAdapter(arrayListOfNotes);
+        layoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                startNoteFragment();
+                startNoteActivity();
             }
         });
 
     }
 
-    private void goToNoteActivity()
+    private void startNoteActivity()
     {
-        Intent noteActivityIntent = new Intent(this, NoteActivity.class);
-        startActivity(noteActivityIntent);
+        startActivity(new Intent(this, NoteActivity.class));
     }
 
-    private void startNoteFragment()
-    {
-        FragmentTransaction noteFragTransaction = getSupportFragmentManager().beginTransaction();
-        noteFragTransaction.replace(R.id.note_list_fragment, new NoteFragment());
-        noteFragTransaction.addToBackStack(null);
-        noteFragTransaction.commit();
-    }
 }
