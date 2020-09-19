@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.notes.R;
+import com.example.notes.controllers.NotesDBTable;
 import com.example.notes.controllers.NotesRecyclerAdapter;
 import com.example.notes.databases.NotesDatabase;
 import com.example.notes.models.Note;
@@ -27,6 +28,7 @@ public class NoteListActivity extends AppCompatActivity
     private NotesRecyclerAdapter recyclerAdapter;
     private LinearLayoutManager layoutManager;
     private ArrayList<Note> arrayListOfNotes;
+    private NotesDatabase notesDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,14 +38,7 @@ public class NoteListActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        arrayListOfNotes = new NotesDatabase(this).getArrayListOfNotesFromDatabase();
-
-        recyclerView = findViewById(R.id.note_list_recyclerview);
-        recyclerAdapter = new NotesRecyclerAdapter(arrayListOfNotes);
-        layoutManager = new LinearLayoutManager(this);
-
-        recyclerView.setAdapter(recyclerAdapter);
-        recyclerView.setLayoutManager(layoutManager);
+        NotesDBTable.createTable(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
@@ -55,6 +50,21 @@ public class NoteListActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        arrayListOfNotes = NotesDBTable.notesTable.getArrayListOfNotesFromDatabase();
+
+        recyclerView = findViewById(R.id.note_list_recyclerview);
+        recyclerAdapter = new NotesRecyclerAdapter(arrayListOfNotes);
+        layoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void startNoteActivity()

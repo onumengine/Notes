@@ -8,12 +8,7 @@ import com.example.notes.databases.NotesDatabase;
 
 public class NotesDBTable
 {
-    private static NotesDatabase notesTable;
-
-    public static NotesDatabase getNotesTable()
-    {
-        return notesTable;
-    }
+    public static NotesDatabase notesTable;
 
     public static void createTable(Context context)
     {

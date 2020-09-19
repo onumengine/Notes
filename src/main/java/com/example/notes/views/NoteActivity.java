@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.example.notes.R;
+import com.example.notes.controllers.NotesDBTable;
 import com.example.notes.databases.NotesDatabase;
 import com.example.notes.models.Note;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,9 +34,9 @@ public class NoteActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onStop()
+    protected void onPause()
     {
-        super.onStop();
+        super.onPause();
         tryToSaveNote();
     }
 
@@ -53,6 +54,6 @@ public class NoteActivity extends AppCompatActivity
     private void saveContentsOfTextfieldsAsNote(String title, String text)
     {
         Note note = new Note(title, text);
-        new NotesDatabase(this).insertNote(note);
+        NotesDBTable.notesTable.insertNote(note);
     }
 }
