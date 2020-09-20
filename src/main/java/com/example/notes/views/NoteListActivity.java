@@ -80,12 +80,6 @@ public class NoteListActivity extends AppCompatActivity implements NotesRecycler
     }
 
     @Override
-    public void onViewHolderClick(int notePosition)
-    {
-        //TODO
-    }
-
-    @Override
     public void onClickNote(String title, String text)
     {
         Intent noteActivityIntent = new Intent(this, NoteActivity.class);

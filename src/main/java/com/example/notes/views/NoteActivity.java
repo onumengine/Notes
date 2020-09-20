@@ -3,6 +3,7 @@ package com.example.notes.views;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -42,6 +43,26 @@ public class NoteActivity extends AppCompatActivity
         tryToSaveNote();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.note_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.delete_action:
+                deleteNote();
+            case R.id.discard_action:
+                discardNote();
+        }
+        return true;
+    }
+
     private void tryToSaveNote()
     {
         String noteTitle = noteTitleInput.getText().toString();
@@ -73,5 +94,20 @@ public class NoteActivity extends AppCompatActivity
         {
             noteTextInput.setText(getIntent().getStringExtra("text"));
         }
+    }
+
+    private void deleteNote()
+    {
+        String noteTitle = noteTitleInput.getText().toString();
+        String noteText = noteTextInput.getText().toString();
+        NotesDBTable.getNotesTable().deleteNote(noteTitle, noteText);
+        discardNote();
+    }
+
+    private void discardNote()
+    {
+        noteTitleInput.setText(null);
+        noteTextInput.setText(null);
+        startActivity(new Intent(this, NoteListActivity.class));
     }
 }

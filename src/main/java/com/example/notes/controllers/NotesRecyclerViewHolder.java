@@ -30,18 +30,6 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
         this.deleteButton = itemView.findViewById(R.id.viewholder_delete_button);
         this.cardView = itemView.findViewById(R.id.viewholder_cardview);
 
-        itemView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                if (deleteButton.getVisibility() == View.VISIBLE)
-                {
-                    deleteButton.setVisibility(View.GONE);
-                }
-            }
-        });
-
         itemView.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override

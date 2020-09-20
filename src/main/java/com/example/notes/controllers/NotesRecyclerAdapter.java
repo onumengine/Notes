@@ -20,7 +20,6 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
     public interface Listener
     {
         void onDeleteButtonClick(String noteTitle);
-        void onViewHolderClick(int notePosition);
         void onClickNote(String title, String text);
     }
 
@@ -59,16 +58,6 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                if (listener != null){
-                    listener.onViewHolderClick(position);
-                }
-            }
-        });
-        holder.cardView.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
