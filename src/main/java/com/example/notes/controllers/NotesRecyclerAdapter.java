@@ -21,16 +21,12 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
     {
         void onDeleteButtonClick(String noteTitle);
         void onViewHolderClick(int notePosition);
+        void onClickNote(String title, String text);
     }
 
     public void setListener(Listener listener)
     {
         this.listener = listener;
-    }
-
-    public void setArrayListOfNotes(ArrayList<Note> arrayListOfNotes)
-    {
-        this.arrayListOfNotes = arrayListOfNotes;
     }
 
     public NotesRecyclerAdapter(ArrayList<Note> arrayListOfNotes)
@@ -47,7 +43,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NotesRecyclerViewHolder holder, final int position)
+    public void onBindViewHolder(@NonNull final NotesRecyclerViewHolder holder, final int position)
     {
         holder.textViewDisplayingNoteTitle.setText(arrayListOfNotes.get(position).getTitle());
         holder.textViewDisplayingNoteText.setText(arrayListOfNotes.get(position).getText());
@@ -70,6 +66,15 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
                 if (listener != null){
                     listener.onViewHolderClick(position);
                 }
+            }
+        });
+        holder.cardView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (holder.deleteButton.getVisibility() != View.VISIBLE)
+                    listener.onClickNote(holder.textViewDisplayingNoteTitle.getText().toString(), holder.textViewDisplayingNoteText.getText().toString());
             }
         });
     }

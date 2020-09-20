@@ -31,6 +31,8 @@ public class NoteActivity extends AppCompatActivity
 
         noteTitleInput = findViewById(R.id.note_title_textview);
         noteTextInput = findViewById(R.id.note_text_textview);
+
+        populateTextFields();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class NoteActivity extends AppCompatActivity
         String noteTitle = noteTitleInput.getText().toString();
         String noteText = noteTextInput.getText().toString();
 
-        if (noteTitle != null && noteText != null)
+        if (!noteTitle.isEmpty() && !noteText.isEmpty())
         {
             saveContentsOfTextfieldsAsNote(noteTitle, noteText);
         }
@@ -54,6 +56,18 @@ public class NoteActivity extends AppCompatActivity
     private void saveContentsOfTextfieldsAsNote(String title, String text)
     {
         Note note = new Note(title, text);
-        NotesDBTable.notesTable.insertNote(note);
+        NotesDBTable.getNotesTable().insertNote(note);
+    }
+
+    private void populateTextFields()
+    {
+        if (getIntent().getStringExtra("title") != null)
+        {
+            noteTitleInput.setText(getIntent().getStringExtra("title"));
+        }
+        if (getIntent().getStringExtra("text") != null)
+        {
+            noteTextInput.setText(getIntent().getStringExtra("text"));
+        }
     }
 }

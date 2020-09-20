@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +20,7 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
     public TextView textViewDisplayingNoteTitle;
     public TextView textViewDisplayingNoteText;
     public ImageButton deleteButton;
-    public int visibilityIndex;
+    public CardView cardView;
 
     public NotesRecyclerViewHolder(@NonNull final View itemView)
     {
@@ -27,7 +28,7 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
         this.textViewDisplayingNoteTitle = itemView.findViewById(R.id.viewholder_note_title_textView);
         this.textViewDisplayingNoteText = itemView.findViewById(R.id.viewholder_note_text_textView);
         this.deleteButton = itemView.findViewById(R.id.viewholder_delete_button);
-        this.visibilityIndex = 0;
+        this.cardView = itemView.findViewById(R.id.viewholder_cardview);
 
         itemView.setOnClickListener(new View.OnClickListener()
         {

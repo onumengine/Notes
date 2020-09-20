@@ -22,13 +22,12 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class NoteListActivity extends AppCompatActivity
+public class NoteListActivity extends AppCompatActivity implements NotesRecyclerAdapter.Listener
 {
     private RecyclerView recyclerView;
     private NotesRecyclerAdapter recyclerAdapter;
     private LinearLayoutManager layoutManager;
     private ArrayList<Note> arrayListOfNotes;
-    private NotesDatabase notesDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,11 +56,13 @@ public class NoteListActivity extends AppCompatActivity
     {
         super.onStart();
 
-        arrayListOfNotes = NotesDBTable.notesTable.getArrayListOfNotesFromDatabase();
+        arrayListOfNotes = NotesDBTable.getNotesTable().getArrayListOfNotesFromDatabase();
 
         recyclerView = findViewById(R.id.note_list_recyclerview);
         recyclerAdapter = new NotesRecyclerAdapter(arrayListOfNotes);
         layoutManager = new LinearLayoutManager(this);
+
+        recyclerAdapter.setListener(this);
 
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(layoutManager);
@@ -72,4 +73,24 @@ public class NoteListActivity extends AppCompatActivity
         startActivity(new Intent(this, NoteActivity.class));
     }
 
+    @Override
+    public void onDeleteButtonClick(String noteTitle)
+    {
+        //TODO
+    }
+
+    @Override
+    public void onViewHolderClick(int notePosition)
+    {
+        //TODO
+    }
+
+    @Override
+    public void onClickNote(String title, String text)
+    {
+        Intent noteActivityIntent = new Intent(this, NoteActivity.class);
+        noteActivityIntent.putExtra("title", title);
+        noteActivityIntent.putExtra("text", text);
+        startActivity(noteActivityIntent);
+    }
 }
