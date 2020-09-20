@@ -6,6 +6,12 @@ public class Note
     private String text;
     private String dateModified;
 
+    @Override
+    public String toString()
+    {
+        return title + text;
+    }
+
     public Note()
     {
     }

@@ -46,10 +46,14 @@ public class NoteActivity extends AppCompatActivity
     {
         String noteTitle = noteTitleInput.getText().toString();
         String noteText = noteTextInput.getText().toString();
+        ArrayList<Note> noteList = NotesDBTable.getNotesTable().getArrayListOfNotesFromDatabase();
 
         if (!noteTitle.isEmpty() && !noteText.isEmpty())
         {
-            saveContentsOfTextfieldsAsNote(noteTitle, noteText);
+            if (!noteTitle.equals(getIntent().getStringExtra("title")) && !noteText.equals(getIntent().getStringExtra("text")))
+            {
+                saveContentsOfTextfieldsAsNote(noteTitle, noteText);
+            }
         }
     }
 
