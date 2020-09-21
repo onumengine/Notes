@@ -74,9 +74,9 @@ public class NoteListActivity extends AppCompatActivity implements NotesRecycler
     }
 
     @Override
-    public void onDeleteButtonClick(String noteTitle)
+    public void onDeleteButtonClick(String noteTitle, String noteText)
     {
-        //TODO
+        NotesDBTable.getNotesTable().deleteNote(noteTitle, noteText);
     }
 
     @Override

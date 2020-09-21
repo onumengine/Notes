@@ -19,7 +19,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
 
     public interface Listener
     {
-        void onDeleteButtonClick(String noteTitle);
+        void onDeleteButtonClick(String noteTitle, String noteText);
         void onClickNote(String title, String text);
     }
 
@@ -53,7 +53,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
             {
                 if (listener != null)
                 {
-                    listener.onDeleteButtonClick(arrayListOfNotes.get(position).getTitle());
+                    listener.onDeleteButtonClick(arrayListOfNotes.get(position).getTitle(), arrayListOfNotes.get(position).getText());
                 }
             }
         });
@@ -63,7 +63,11 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
             public void onClick(View view)
             {
                 if (holder.deleteButton.getVisibility() != View.VISIBLE)
+                {
                     listener.onClickNote(holder.textViewDisplayingNoteTitle.getText().toString(), holder.textViewDisplayingNoteText.getText().toString());
+                } else {
+                    holder.deleteButton.setVisibility(View.GONE);
+                }
             }
         });
     }

@@ -41,17 +41,6 @@ public class NotesRecyclerViewHolder extends RecyclerView.ViewHolder
                 return true;
             }
         });
-
-        deleteButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Toast.makeText(view.getContext(), "Why u wanna delete me tho", Toast.LENGTH_SHORT).show();
-                expandViewHorizontally(view);
-                expandViewVertically(view);
-            }
-        });
     }
 
     public void changeVisibility(View view)
