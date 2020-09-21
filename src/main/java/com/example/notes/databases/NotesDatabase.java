@@ -96,4 +96,9 @@ public class NotesDatabase extends SQLiteOpenHelper
         db.close();
     }
 
+    public void deleteNote(int id)
+    {
+        //todo
+    }
+
 }
