@@ -68,12 +68,6 @@ public class NoteActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onBackPressed()
-    {
-        Toast.makeText(this, "U just pressed back", Toast.LENGTH_SHORT).show();
-    }
-
     private void tryToSaveNote()
     {
         String noteTitle = noteTitleInput.getText().toString();
@@ -133,6 +127,11 @@ public class NoteActivity extends AppCompatActivity
     {
         noteTitleInput.setText(null);
         noteTextInput.setText(null);
-        startActivity(new Intent(this, NoteListActivity.class));
+        goBackToNoteListActivity();
+    }
+
+    private void goBackToNoteListActivity()
+    {
+        super.onBackPressed();
     }
 }
