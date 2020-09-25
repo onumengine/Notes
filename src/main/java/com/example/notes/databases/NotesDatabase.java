@@ -64,6 +64,55 @@ public class NotesDatabase extends SQLiteOpenHelper
         db.close();
     }
 
+    public void updateNoteTitle(String title)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues updatedTitle = new ContentValues();
+        updatedTitle.put("title", title);
+
+        db.update(
+                "NOTES",
+                updatedTitle,
+                "body = ?",
+                new String[] {}
+        );
+        db.close();
+    }
+
+    public void updateNoteText(String text)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues updatedText = new ContentValues();
+        updatedText.put("text", text);
+
+        db.update(
+                "NOTES",
+                updatedText,
+                "text = ?",
+                new String[] {}
+        );
+        db.close();
+    }
+
+    public void updateNote(String noteTitle, String noteText)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues updatedDetails = new ContentValues();
+        updatedDetails.put("title", noteTitle);
+        updatedDetails.put("body", noteText);
+
+        db.update(
+                "NOTES",
+                updatedDetails,
+                "title = ?",
+                new String[] {}
+        );
+        db.close();
+    }
+
     public ArrayList<Note> getArrayListOfNotesFromDatabase()
     {
         SQLiteDatabase db = getReadableDatabase();

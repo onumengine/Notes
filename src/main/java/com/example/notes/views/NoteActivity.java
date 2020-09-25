@@ -2,23 +2,21 @@ package com.example.notes.views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.notes.R;
 import com.example.notes.controllers.NotesDBTable;
-import com.example.notes.databases.NotesDatabase;
 import com.example.notes.models.Note;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
+
 
 public class NoteActivity extends AppCompatActivity
 {
@@ -29,6 +27,13 @@ public class NoteActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        CoordinatorLayout rootLayout = findViewById(R.id.root_layout);
 
         noteTitleInput = findViewById(R.id.note_title_textview);
         noteTextInput = findViewById(R.id.note_text_textview);
@@ -63,15 +68,35 @@ public class NoteActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Toast.makeText(this, "U just pressed back", Toast.LENGTH_SHORT).show();
+    }
+
     private void tryToSaveNote()
     {
         String noteTitle = noteTitleInput.getText().toString();
         String noteText = noteTextInput.getText().toString();
-        ArrayList<Note> noteList = NotesDBTable.getNotesTable().getArrayListOfNotesFromDatabase();
 
         if (!noteTitle.isEmpty() && !noteText.isEmpty())
         {
-            if (!noteTitle.equals(getIntent().getStringExtra("title")) && !noteText.equals(getIntent().getStringExtra("text")))
+            if (getIntent().getExtras() != null)
+            {
+                if (!noteTitle.equals(getIntent().getStringExtra("title")) && !noteText.equals(getIntent().getStringExtra("text")))
+                {
+                    NotesDBTable.getNotesTable().updateNote(noteTitle, noteText);
+                }
+                else if (!noteTitle.equals(getIntent().getStringExtra("title")))
+                {
+                    NotesDBTable.getNotesTable().updateNoteTitle(noteTitle);
+                }
+                else if (!noteText.equals(getIntent().getStringExtra("text")))
+                {
+                    NotesDBTable.getNotesTable().updateNoteText(noteText);
+                }
+            }
+            else
             {
                 saveContentsOfTextfieldsAsNote(noteTitle, noteText);
             }
