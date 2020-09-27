@@ -77,17 +77,20 @@ public class NoteActivity extends AppCompatActivity
         {
             if (getIntent().getExtras() != null)
             {
-                if (!noteTitle.equals(getIntent().getStringExtra("title")) && !noteText.equals(getIntent().getStringExtra("text")))
+                String titleExtra = getIntent().getStringExtra("title");
+                String textExtra = getIntent().getStringExtra("text");
+
+                if (!noteTitle.equals(titleExtra) && !noteText.equals(textExtra))
                 {
-                    NotesDBTable.getNotesTable().updateNote(noteTitle, noteText);
+                    NotesDBTable.getNotesTable().updateNote(noteTitle, noteText, titleExtra);
                 }
-                else if (!noteTitle.equals(getIntent().getStringExtra("title")))
+                else if (!noteTitle.equals(titleExtra))
                 {
-                    NotesDBTable.getNotesTable().updateNoteTitle(noteTitle);
+                    NotesDBTable.getNotesTable().updateNoteTitle(noteTitle, noteText);
                 }
-                else if (!noteText.equals(getIntent().getStringExtra("text")))
+                else if (!noteText.equals(textExtra))
                 {
-                    NotesDBTable.getNotesTable().updateNoteText(noteText);
+                    NotesDBTable.getNotesTable().updateNoteText(noteTitle, noteText);
                 }
             }
             else

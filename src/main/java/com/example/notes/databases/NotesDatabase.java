@@ -64,7 +64,7 @@ public class NotesDatabase extends SQLiteOpenHelper
         db.close();
     }
 
-    public void updateNoteTitle(String title)
+    public void updateNoteTitle(String title, String text)
     {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -75,28 +75,28 @@ public class NotesDatabase extends SQLiteOpenHelper
                 "NOTES",
                 updatedTitle,
                 "body = ?",
-                new String[] {}
+                new String[] {text}
         );
         db.close();
     }
 
-    public void updateNoteText(String text)
+    public void updateNoteText(String title, String text)
     {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues updatedText = new ContentValues();
-        updatedText.put("text", text);
+        updatedText.put("body", text);
 
         db.update(
                 "NOTES",
                 updatedText,
-                "text = ?",
-                new String[] {}
+                "title = ?",
+                new String[] {title}
         );
         db.close();
     }
 
-    public void updateNote(String noteTitle, String noteText)
+    public void updateNote(String noteTitle, String noteText, String whereClauseValue)
     {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -108,7 +108,7 @@ public class NotesDatabase extends SQLiteOpenHelper
                 "NOTES",
                 updatedDetails,
                 "title = ?",
-                new String[] {}
+                new String[] {whereClauseValue}
         );
         db.close();
     }
