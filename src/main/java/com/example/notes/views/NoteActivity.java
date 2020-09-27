@@ -7,6 +7,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -15,12 +16,13 @@ import android.widget.Toast;
 import com.example.notes.R;
 import com.example.notes.controllers.NotesDBTable;
 import com.example.notes.models.Note;
-
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class NoteActivity extends AppCompatActivity
 {
     private EditText noteTitleInput, noteTextInput;
+    private CoordinatorLayout rootLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,7 +35,7 @@ public class NoteActivity extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        CoordinatorLayout rootLayout = findViewById(R.id.root_layout);
+        rootLayout = findViewById(R.id.root_layout);
 
         noteTitleInput = findViewById(R.id.note_title_textview);
         noteTextInput = findViewById(R.id.note_text_textview);
@@ -130,11 +132,30 @@ public class NoteActivity extends AppCompatActivity
     {
         noteTitleInput.setText(null);
         noteTextInput.setText(null);
-        goBackToNoteListActivity();
+        showSnackbar();
+        returnToNoteListActivity();
     }
 
     private void goBackToNoteListActivity()
     {
         super.onBackPressed();
+    }
+
+    private void showSnackbar()
+    {
+        Snackbar snackbar = Snackbar.make(rootLayout, "Note deleted", Snackbar.LENGTH_SHORT);
+        snackbar.show();
+    }
+
+    private void returnToNoteListActivity()
+    {
+        new Handler().postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                goBackToNoteListActivity();
+            }
+        }, 2000);
     }
 }

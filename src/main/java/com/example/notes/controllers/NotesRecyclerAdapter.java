@@ -53,7 +53,10 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerView
             {
                 if (listener != null)
                 {
-                    listener.onDeleteButtonClick(arrayListOfNotes.get(position).getTitle(), arrayListOfNotes.get(position).getText());
+                    listener.onDeleteButtonClick(
+                            holder.textViewDisplayingNoteTitle.getText().toString(),
+                            holder.textViewDisplayingNoteText.getText().toString()
+                    );
                 }
             }
         });

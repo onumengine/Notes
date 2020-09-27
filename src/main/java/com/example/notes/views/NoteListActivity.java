@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ public class NoteListActivity extends AppCompatActivity implements NotesRecycler
     private NotesRecyclerAdapter recyclerAdapter;
     private LinearLayoutManager layoutManager;
     private ArrayList<Note> arrayListOfNotes;
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,6 +38,8 @@ public class NoteListActivity extends AppCompatActivity implements NotesRecycler
         setContentView(R.layout.activity_note_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        coordinatorLayout = findViewById(R.id.coordinator);
 
         NotesDBTable.createTable(this);
 
@@ -77,6 +81,8 @@ public class NoteListActivity extends AppCompatActivity implements NotesRecycler
     public void onDeleteButtonClick(String noteTitle, String noteText)
     {
         NotesDBTable.getNotesTable().deleteNote(noteTitle, noteText);
+        onStart();
+        showSnackbar();
     }
 
     @Override
@@ -86,5 +92,10 @@ public class NoteListActivity extends AppCompatActivity implements NotesRecycler
         noteActivityIntent.putExtra("title", title);
         noteActivityIntent.putExtra("text", text);
         startActivity(noteActivityIntent);
+    }
+
+    private void showSnackbar() {
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Note deleted", Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }
