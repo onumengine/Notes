@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.notes.R;
 import com.example.notes.controllers.NotesDBTable;
 import com.example.notes.models.Note;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 
@@ -125,14 +126,15 @@ public class NoteActivity extends AppCompatActivity
         String noteTitle = noteTitleInput.getText().toString();
         String noteText = noteTextInput.getText().toString();
         NotesDBTable.getNotesTable().deleteNote(noteTitle, noteText);
-        discardNote();
+        clearTextFields();
+        showSnackbar("Note deleted");
+        returnToNoteListActivity();
     }
 
     private void discardNote()
     {
-        noteTitleInput.setText(null);
-        noteTextInput.setText(null);
-        showSnackbar();
+        clearTextFields();
+        showSnackbar("Note discarded");
         returnToNoteListActivity();
     }
 
@@ -141,9 +143,9 @@ public class NoteActivity extends AppCompatActivity
         super.onBackPressed();
     }
 
-    private void showSnackbar()
+    private void showSnackbar(String message)
     {
-        Snackbar snackbar = Snackbar.make(rootLayout, "Note deleted", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(rootLayout, message, Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
 
@@ -157,5 +159,11 @@ public class NoteActivity extends AppCompatActivity
                 goBackToNoteListActivity();
             }
         }, 2000);
+    }
+
+    private void clearTextFields()
+    {
+        noteTitleInput.setText(null);
+        noteTextInput.setText(null);
     }
 }

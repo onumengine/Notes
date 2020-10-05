@@ -6,5 +6,7 @@
         android:icon="@drawable/ic_baseline_delete_24_white"
         app:showAsAction="always" />
     <item android:id="@+id/discard_action"
-        android:title="Discard note"/>
+        android:title="Discard note"
+        android:icon="@drawable/ic_discard_24"
+        app:showAsAction="always"/>
 </menu>

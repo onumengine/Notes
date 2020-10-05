@@ -95,7 +95,7 @@ public class NoteListActivity extends AppCompatActivity implements NotesRecycler
     }
 
     private void showSnackbar() {
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Note deleted", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Note deleted", Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
 }
